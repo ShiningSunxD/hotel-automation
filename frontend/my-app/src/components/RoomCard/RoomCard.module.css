@@ -1,0 +1,31 @@
+.RoomCard {
+    padding: 30px;
+    display: flex;
+    width: 75%;
+    justify-content: space-between;
+}
+
+.image{
+    width: 30%;
+    height: auto;
+    object-fit: contain;
+}
+
+.bookCheckbox{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.datePickers{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 5%;
+}
+
+.typographies{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}

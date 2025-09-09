@@ -1,0 +1,15 @@
+.paper{
+    margin-top: 30px;
+    width: 60%;
+    padding: 40px;
+}
+
+.typography {
+    text-align: center;
+}
+
+.summaries{
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+}

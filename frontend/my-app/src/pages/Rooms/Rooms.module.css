@@ -1,0 +1,22 @@
+.paper{
+    margin-top: 30px;
+
+}
+
+.typography {
+    text-align: center;
+}
+
+.filterBar{
+    display:flex;
+    gap: 10px;
+}
+
+.typeSelect{
+    width: 120px;
+}
+
+.priceSelect{
+    width: 120px;
+
+}

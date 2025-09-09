@@ -1,0 +1,8 @@
+export { default as Account } from './Account/Account';
+export { default as Booking } from './Booking/Booking';
+export { default as Home } from './Home/Home';
+export { default as Login } from './Login/Login';
+export { default as Logout } from './Logout/Logout';
+export { default as Rooms } from './Rooms/Rooms';
+export { default as Signup } from './Signup/Signup';
+export { default as Admin } from './Admin/Admin';
