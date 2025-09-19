@@ -1,43 +1,119 @@
-import * as React from 'react';
-import Table from '@mui/material/Table';
-import TableBody from '@mui/material/TableBody';
-import TableCell from '@mui/material/TableCell';
-import TableContainer from '@mui/material/TableContainer';
-import TableHead from '@mui/material/TableHead';
-import TableRow from '@mui/material/TableRow';
-import Paper from '@mui/material/Paper';
+import { useState, useEffect } from 'react';
+import { Button, Table, TableBody, TableCell, TableHead, TableRow } from '@mui/material';
+import { BrowserRouter as Router, Routes, Route, useSearchParams, Link, useNavigate } from 'react-router-dom';
 
+function Row({ modelName, row, API_to_update, order, setDeleted }) {
+  const navigate = useNavigate();
+  let id;
 
-export default function AdminTable() {
   return (
-    <TableContainer component={Paper}>
-      <Table sx={{ minWidth: 650 }} aria-label="simple table">
-        <TableHead>
-          <TableRow>
-            <TableCell>Dessert (100g serving)</TableCell>
-            <TableCell align="right">Calories</TableCell>
-            <TableCell align="right">Fat&nbsp;(g)</TableCell>
-            <TableCell align="right">Carbs&nbsp;(g)</TableCell>
-            <TableCell align="right">Protein&nbsp;(g)</TableCell>
-          </TableRow>
-        </TableHead>
-        <TableBody>
-          {rows.map((row) => (
-            <TableRow
-              key={row.name}
-              sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
-            >
-              <TableCell component="th" scope="row">
-                {row.name}
-              </TableCell>
-              <TableCell align="right">{row.calories}</TableCell>
-              <TableCell align="right">{row.fat}</TableCell>
-              <TableCell align="right">{row.carbs}</TableCell>
-              <TableCell align="right">{row.protein}</TableCell>
-            </TableRow>
-          ))}
-        </TableBody>
-      </Table>
-    </TableContainer>
+    <>
+      <TableRow sx={{ '& > *': { borderBottom: 'unset' } }}>
+        {order.map((item, index) => {
+          
+              if(item == 'id'){
+                id = row[item];
+              }
+
+
+              if( typeof row[item] === 'boolean'){
+                return <TableCell align="center" key={index}> {row[item] ? 'да' : 'нет'} </TableCell>
+              }
+              return <TableCell align="center" key={index}> {row[item] ? row[item] : '-'} </TableCell>
+          })}
+        <TableCell sx={{display: 'flex', flexDirection: 'column', gap: '10px', alignItems:'center'}} align="center">
+            <Button onClick={() => {
+              const response = API_to_update.destroy(row.id);
+              setDeleted(prevDeleted => [...prevDeleted, row.id]);
+            }} 
+            sx={{backgroundColor: 'red', color: 'white', width: '10vh'}} variant="outlined">
+            Удалить
+          </Button>
+
+            <Button onClick={() => {
+              navigate(`/edit?table=${modelName}&id=${id}`)
+            }}
+            sx={{backgroundColor: 'cean', color: 'black', width: '10vh'}} variant="outlined">
+            Изменить
+          </Button>
+        </TableCell>
+
+
+
+      </TableRow>
+    </>
   );
 }
+
+
+function AdminTable({modelName, API, API_to_update}) {
+  const [header, setHeader] = useState({});
+  const [fields, setFields] = useState([]);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState('');
+
+  const [deleted, setDeleted] = useState([]);
+
+  let order = ['id'];
+
+
+  useEffect(() => {
+          setLoading(false);
+          const fetchFields = async () => {
+          try {
+              const params = {
+                  model: modelName
+                  }
+
+
+              const [metadataResponse, fetchResponse] = await Promise.all([
+                            API.get({params}),
+                            API_to_update.list()
+                            ])
+              let dict = {};
+              metadataResponse.data.map((item) => {
+                let name = item.name;
+                let label = item.label;
+                dict[name] = label; 
+              })
+              setHeader(dict);
+              setFields(fetchResponse.data);
+              setLoading(false);
+          } catch (err) {
+              setError(err);
+              setLoading(false);
+          }
+          };
+  
+          fetchFields();
+      }, [modelName, deleted]);
+
+
+
+  return (
+      <Table aria-label="collapsible table">
+        <TableHead>
+          <TableRow>
+
+            <TableCell align="center">id</TableCell>
+            {Object.entries(header).map(([name, label], index) => {
+              order.push(name);
+              return <TableCell key={index} align="center">{label}</TableCell>
+            })}
+            <TableCell align="center">Действия</TableCell>
+          </TableRow>
+        </TableHead>
+
+        <TableBody>
+          {fields.map((item) => {
+            const isInCollection = deleted.includes(item.id);
+            if(isInCollection) return
+
+              return <Row key={item.id} modelName={modelName} row={item} API_to_update={API_to_update} order={order} setDeleted={setDeleted}/>
+          })}
+        </TableBody>
+      </Table>
+  )
+}
+
+export default AdminTable;

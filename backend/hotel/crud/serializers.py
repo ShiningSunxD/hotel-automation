@@ -73,7 +73,7 @@ class BookingServiceInputSerializer(serializers.Serializer):
 
 
 class BookingSerializer(serializers.ModelSerializer):
-    services_data = BookingServiceInputSerializer(many=True, write_only=True)
+    services_data = BookingServiceInputSerializer(many=True, write_only=True, required=False, allow_null=True)
     
 
     room_name = serializers.CharField(source='room.number', read_only=True)
@@ -85,7 +85,7 @@ class BookingSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Booking
-        fields = ['id', 'user', 'room', 'room_name', 'status', 'status_display', 'check_in', 'check_out', 'services_data']
+        fields = ['id', 'user', 'room', 'room_name', 'status', 'status_display', 'check_in', 'check_out', 'services_data', 'created_at']
         read_only_fields = ['user']
 
 

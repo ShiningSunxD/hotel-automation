@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useMemo } from 'react';
 import { TextField, MenuItem, FormControlLabel, Checkbox, Button } from '@mui/material';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
@@ -6,7 +6,7 @@ import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 import dayjs from 'dayjs';
 import styles from './DynamicForm.module.css'
 
-function DynamicForm({ modelName, API, API_to_update }) {
+function DynamicForm({ modelName, API, API_to_update, predefined={}, callBack }) {
     const [fields, setFields] = useState([]);
     const [formData, setFormData] = useState({});
     const [loading, setLoading] = useState(false);
@@ -14,8 +14,10 @@ function DynamicForm({ modelName, API, API_to_update }) {
     const [fileData, setFileData] = useState({});
 
 
+
     useEffect(() => {
         setLoading(false);
+        setFormData(predefined);
         const fetchFields = async () => {
         try {
             const params = {
@@ -31,10 +33,13 @@ function DynamicForm({ modelName, API, API_to_update }) {
         };
 
         fetchFields();
-    }, [modelName]);
+    }, [modelName, predefined.id]);
 
     const handleInputChange = (e) => {
         console.log(formData);
+        console.log(fields);
+
+
         const { name, value, type, checked } = e.target;
         if(type === 'number'){
             setFormData((prevData) => ({
@@ -81,6 +86,17 @@ function DynamicForm({ modelName, API, API_to_update }) {
             // Проверяем, есть ли файлы для отправки
             const hasFiles = Object.keys(fileData).some(key => fileData[key]);
             
+            if(predefined){
+                let newData = {}
+                fields.map((item) => {
+                    newData[item.name] = formData[item.name];
+                })
+                setFormData(newData);
+                    console.log('formData - ', formData)
+            }
+
+            console.log('fileData - ', fileData);
+
             if (hasFiles) {
                 // Если есть файлы, используем FormData
                 const formDataToSend = new FormData();
@@ -106,27 +122,47 @@ function DynamicForm({ modelName, API, API_to_update }) {
 
                 console.log('Отправка FormData:', formDataToSend);
 
-                const response = await API_to_update.create(formDataToSend, {
+                let response;
+                if(predefined){
+                    response = await API_to_update.update(predefined.id, formDataToSend, {
                     headers: {
                         'Content-Type': 'multipart/form-data'
                     }
                 });
+                }
+                else{
+                    response = await API_to_update.create(formDataToSend, {
+                    headers: {
+                        'Content-Type': 'multipart/form-data'
+                    }
+                });
+                }
                 
                 console.log(response.data);
             } else {
 
-                const jsonDataToSend = { ...formData };
 
+                const jsonDataToSend = formData;
+
+                delete jsonDataToSend['photo'];
 
                 console.log('Отправка JSON:', jsonDataToSend);
 
-                const response = await API_to_update.create(jsonDataToSend);
+                let response;
+                if(predefined){
+                    response = await API_to_update.update(predefined.id, jsonDataToSend);
+                }
+                else{
+                    response = await API_to_update.create(jsonDataToSend);
+                }
                 console.log(response.data);
             }
             
             alert('Данные успешно сохранены!');
             setFormData({}); 
             setFileData({});
+            document.getElementById('fileInput').value = '';
+            callBack();
         } catch (err) {
             console.error('Ошибка при сохранении:', err);
             alert('Произошла ошибка при сохранении данных');
@@ -213,7 +249,7 @@ function DynamicForm({ modelName, API, API_to_update }) {
                                 onChange={(newValue) => {
                                         setFormData((prevData) => ({
                                         ...prevData,
-                                        [field.name]: newValue,
+                                        [field.name]: dayjs(newValue).format('YYYY-MM-DD'),
                                     }));
                                 }}
                                 />
@@ -258,6 +294,7 @@ function DynamicForm({ modelName, API, API_to_update }) {
                         )}
                         {field.type === 'file' && (
                                 <input className={styles.inputField}
+                                    id='fileInput'
                                     type="file"
                                     name={field.name}
                                     onChange={handleFileChange}

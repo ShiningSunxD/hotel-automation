@@ -11,8 +11,9 @@ import Typography from '@mui/material/Typography';
 import Paper from '@mui/material/Paper';
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
+import { Button } from '@mui/material';
 
-function Row({ row }) {
+function Row({ row, API, setDeleted }) {
   const [open, setOpen] = useState(false);
 
   return (
@@ -34,7 +35,15 @@ function Row({ row }) {
         <TableCell align="right">{row.check_in}</TableCell>
         <TableCell align="right">{row.check_out}</TableCell>
         <TableCell align="right">{row.status_display}</TableCell>
-        <TableCell align="right">Отменить</TableCell>
+        <TableCell align="right">
+            <Button onClick={() => {
+              const response = API.destroy(row.id);
+              setDeleted(prevDeleted => [...prevDeleted, row.id]);
+            }} 
+            sx={{backgroundColor: 'red', color: 'white'}} variant="outlined">
+            Отменить
+          </Button>
+        </TableCell>
       </TableRow>
       <TableRow>
         <TableCell style={{ paddingBottom: 0, paddingTop: 0 }} colSpan={6}>
@@ -70,7 +79,9 @@ function Row({ row }) {
 }
 
 
-function BookingTable({header, data}) {
+function BookingTable({header, data, API}) {
+  const [deleted, setDeleted] = useState([]);
+
   return (
       <Table aria-label="collapsible table">
         <TableHead>
@@ -83,9 +94,15 @@ function BookingTable({header, data}) {
         </TableHead>
 
         <TableBody>
-          {data.map((item) => (
-            <Row key={item.id} row={item} />
-          ))}
+          {data.map((item) => {
+            const isInCollection = deleted.includes(item.id);
+            if(isInCollection){
+              return
+            }
+            else{
+              return <Row key={item.id} row={item} API={API} setDeleted={setDeleted}/>
+            }
+          })}
         </TableBody>
       </Table>
   );

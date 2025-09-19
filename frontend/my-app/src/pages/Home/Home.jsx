@@ -6,7 +6,7 @@ import { useEffect } from 'react';
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
-
+import { URL } from '../../api';
 
 function Home() {
 
@@ -35,15 +35,15 @@ function Home() {
          <TopNavigation />
          <Slider {...settings} className={styles.sliderContainer}>
             <img
-                  src={'http://127.0.0.1:8000/media/main_slider/slide1.jpg'}
+                  src={URL + '/media/main_slider/slide1.jpg'}
                   alt={`Фото отеля`}
             />
             <img
-                  src={'http://127.0.0.1:8000/media/main_slider/slide2.jpg'}
+                  src={URL + '/media/main_slider/slide2.jpg'}
                   alt={`Фото отеля`}
             />
             <img
-                  src={'http://127.0.0.1:8000/media/main_slider/slide3.jpg'}
+                  src={URL + '/media/main_slider/slide3.jpg'}
                   alt={`Фото отеля`}
             />
          </Slider>

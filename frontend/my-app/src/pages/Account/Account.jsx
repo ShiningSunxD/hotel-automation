@@ -60,7 +60,7 @@ function Account() {
       <Typography variant="h3">Добро пожаловать!</Typography>
       
       <Paper className={styles.bookingTable} variant="elevation" elevation={3}>
-         <BookingTable className={styles.bookingTable} data={bookingData} header={header} />
+         <BookingTable className={styles.bookingTable} data={bookingData} header={header} API={bookingsAPI} />
       </Paper>
         
       

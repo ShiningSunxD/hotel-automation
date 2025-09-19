@@ -1,7 +1,10 @@
 import axios from 'axios';
 
+export const URL = 'http://127.0.0.1:8000';
+
+
 const api = axios.create({
-    baseURL: 'http://127.0.0.1:8000/api/'
+    baseURL: URL + '/api/'
 });
 
 api.interceptors.request.use((config) => {
@@ -30,6 +33,7 @@ export const servicesAPI = createCRUD('crud/services/');
 export const bookingsAPI = createCRUD('crud/bookings/');
 export const booking_serviceAPI = createCRUD('crud/booking_service/');
 export const userAPI = createCRUD('auth/user/');
+
 
 export const authAPI = {
     login: (credentials) => api.post('auth/login/', credentials),

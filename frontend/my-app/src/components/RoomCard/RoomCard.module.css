@@ -9,6 +9,7 @@
     width: 30%;
     height: auto;
     object-fit: contain;
+    border-radius: 7%;
 }
 
 .bookCheckbox{

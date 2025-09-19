@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { Typography, Paper, Button } from '@mui/material';
-import { TopNavigation, Footer, BookingTable, DynamicForm } from '@components';
+import { TopNavigation, Footer, DynamicForm, AdminTable } from '@components';
 import  useAdmin  from '../../hooks/useAdmin.jsx';
 import { useNavigate } from 'react-router-dom';
 import { adminMetadataAPI, roomsAPI, room_typesAPI, servicesAPI, bookingsAPI, booking_serviceAPI, userAPI } from '../../api';
@@ -48,35 +48,6 @@ function Admin() {
   }, [isAdmin, isLoading]);
 
 
-   useEffect(() => {
-      if(shouldRender && table !== null){
-         (async () => {
-         try {
-            const params = {
-               model: table
-            }
-
-            console.log(FetchAPI)
-
-            const [metadataResponse, fetchResponse] = await Promise.all([
-               adminMetadataAPI.get({params}),
-               FetchAPI.list()
-            ])
-               
-            if(metadataResponse.status == 200){
-               console.log('metadata -', metadataResponse.data);
-            }
-            if(fetchResponse.status == 200){
-               console.log('fetch -', fetchResponse.data);
-            }
-
-   
-         } catch (err) {
-            console.log(err);
-         }
-         })();
-      }
-   }, [shouldRender, table]);
 
 
    if(shouldRender){
@@ -95,8 +66,9 @@ function Admin() {
          </div>
          
          {table && <DynamicForm modelName={table} API={adminMetadataAPI} API_to_update={FetchAPI} />}
-         {/* {table && } */}
-      
+         <Paper className={styles.adminTable} variant="elevation" elevation={3}>
+            {table && <AdminTable modelName={table} API={adminMetadataAPI} API_to_update={FetchAPI} />}
+         </Paper>
       <Footer />
      </>
    )
