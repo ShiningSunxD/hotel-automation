@@ -1,18 +1,18 @@
 .navigation{
     display: flex;
     width:100%;
-    margin-top: 20px;
-    gap: 200px;
+    margin-top: 1%;
+    gap: 10%;
 }
 
 .navigation_login{
     display: flex;
-    gap: 20px;
+    gap: 5%;
 }
 
 .nav_button {
     &:focus{
-        border-radius: 10px;
+        border-radius: 20px;
     }
 }
 

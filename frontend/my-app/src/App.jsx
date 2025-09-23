@@ -1,5 +1,5 @@
 import { BrowserRouter, Routes, Route } from 'react-router-dom'
-import { Home, Login, Rooms, Booking, Signup, Logout, Account, Admin, Edit } from '@pages'
+import { Home, Login, Rooms, Booking, Signup, Logout, Account, Admin, Edit, ArticleDetail } from '@pages'
 
 
 function App() {
@@ -16,6 +16,7 @@ function App() {
         <Route path="/account" element={<Account />} />
         <Route path="/admin" element={<Admin />} />
         <Route path="/edit" element={<Edit />} />
+        <Route path="/articles/:slug" element={<ArticleDetail />} />
       </Routes>
     </BrowserRouter>
   )

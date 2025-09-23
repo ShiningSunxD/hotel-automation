@@ -33,8 +33,8 @@ export const servicesAPI = createCRUD('crud/services/');
 export const bookingsAPI = createCRUD('crud/bookings/');
 export const booking_serviceAPI = createCRUD('crud/booking_service/');
 export const userAPI = createCRUD('auth/user/');
-
-
+export const articlesAPI = createCRUD('articles/articles/');
+export const articleImagesAPI = createCRUD('articles/article-images/');
 export const authAPI = {
     login: (credentials) => api.post('auth/login/', credentials),
     logout: () => api.post('/auth/logout/'),
@@ -42,6 +42,7 @@ export const authAPI = {
     verify: () => api.get('auth/verify/'),
     verify_admin: () => api.get('auth/verify_admin/')
 };
+
 
 export const adminMetadataAPI = {
     get: (credentials) => api.get('hotel_admin/metadata/', credentials)

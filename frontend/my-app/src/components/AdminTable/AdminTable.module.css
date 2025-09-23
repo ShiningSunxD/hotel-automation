@@ -1,0 +1,7 @@
+.tableContainer{
+    table-layout: fixed;
+}
+
+.tableCell{
+    overflow: hidden;
+}

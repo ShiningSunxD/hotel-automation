@@ -1,6 +1,6 @@
 import styles from './Home.module.css';
 import Paper from '@mui/material/Paper';
-import { TopNavigation, Footer } from '@components';
+import { TopNavigation, Footer, ArticleList } from '@components';
 import { useEffect } from 'react';
 
 import Slider from "react-slick";
@@ -16,7 +16,7 @@ function Home() {
 
    
 
-   const settings = {
+   const settingsForSlider = {
     dots: true,
     fade: true,
     infinite: true,
@@ -33,21 +33,26 @@ function Home() {
   return (
      <>
          <TopNavigation />
-         <Slider {...settings} className={styles.sliderContainer}>
+
+         <Slider {...settingsForSlider} className={styles.sliderContainer}>
             <img
                   src={URL + '/media/main_slider/slide1.jpg'}
-                  alt={`Фото отеля`}
+                  alt={`Ошибка загрузки фото`}
             />
             <img
                   src={URL + '/media/main_slider/slide2.jpg'}
-                  alt={`Фото отеля`}
+                  alt={`Ошибка загрузки фото`}
             />
             <img
                   src={URL + '/media/main_slider/slide3.jpg'}
-                  alt={`Фото отеля`}
+                  alt={`Ошибка загрузки фото`}
             />
          </Slider>
 
+
+
+         <ArticleList />
+         
          <Footer />
      
      </>

@@ -19,6 +19,9 @@ class DynamicMetadataView(APIView):
             try:
                 if(model_name == 'User'):
                     model = apps.get_model(app_label='auth', model_name=model_name)
+                elif(model_name == 'Article' or model_name == 'ArticleImage'):
+                    model = apps.get_model(app_label='articles', model_name=model_name)
+
                 else:
                     model = apps.get_model(app_label='crud', model_name=model_name)
             except LookupError:
@@ -68,6 +71,7 @@ class DynamicMetadataView(APIView):
         field_type = field.get_internal_type().lower()
         
         type_mapping = {
+            'slugfield': 'text',
             'charfield': 'text',
             'textfield': 'textarea',
             'integerfield': 'number',

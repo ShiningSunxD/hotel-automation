@@ -1,12 +1,12 @@
 import { useState, useEffect, useMemo } from 'react';
-import { TextField, MenuItem, FormControlLabel, Checkbox, Button } from '@mui/material';
+import { TextField, MenuItem, FormControlLabel, Checkbox, Button, TextareaAutosize } from '@mui/material';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 import dayjs from 'dayjs';
 import styles from './DynamicForm.module.css'
 
-function DynamicForm({ modelName, API, API_to_update, predefined={}, callBack }) {
+function DynamicForm({ modelName, API, API_to_update, predefined={}, callBack=null }) {
     const [fields, setFields] = useState([]);
     const [formData, setFormData] = useState({});
     const [loading, setLoading] = useState(false);
@@ -86,7 +86,7 @@ function DynamicForm({ modelName, API, API_to_update, predefined={}, callBack })
             // Проверяем, есть ли файлы для отправки
             const hasFiles = Object.keys(fileData).some(key => fileData[key]);
             
-            if(predefined){
+            if(Object.keys(predefined).length !== 0){
                 let newData = {}
                 fields.map((item) => {
                     newData[item.name] = formData[item.name];
@@ -123,7 +123,7 @@ function DynamicForm({ modelName, API, API_to_update, predefined={}, callBack })
                 console.log('Отправка FormData:', formDataToSend);
 
                 let response;
-                if(predefined){
+                if(Object.keys(predefined).length !== 0){
                     response = await API_to_update.update(predefined.id, formDataToSend, {
                     headers: {
                         'Content-Type': 'multipart/form-data'
@@ -149,7 +149,7 @@ function DynamicForm({ modelName, API, API_to_update, predefined={}, callBack })
                 console.log('Отправка JSON:', jsonDataToSend);
 
                 let response;
-                if(predefined){
+                if(Object.keys(predefined).length !== 0){
                     response = await API_to_update.update(predefined.id, jsonDataToSend);
                 }
                 else{
@@ -161,8 +161,11 @@ function DynamicForm({ modelName, API, API_to_update, predefined={}, callBack })
             alert('Данные успешно сохранены!');
             setFormData({}); 
             setFileData({});
-            document.getElementById('fileInput').value = '';
-            callBack();
+            const fileInput = document.getElementById('fileInput');
+            if (fileInput) {
+                fileInput.value = '';
+            }
+            callBack && callBack();
         } catch (err) {
             console.error('Ошибка при сохранении:', err);
             alert('Произошла ошибка при сохранении данных');
@@ -214,6 +217,17 @@ function DynamicForm({ modelName, API, API_to_update, predefined={}, callBack })
                             onChange={handleInputChange}
                             required={field.required}
                             placeholder={`Введите ${field.label.toLowerCase()}`}
+                            />
+                        )}
+                        {field.type === 'textarea' && (
+                            <TextareaAutosize
+                                aria-label="minimum height"
+                                name={field.name}
+                                value={formData[field.name] || ''}
+                                minRows={3}
+                                onChange={handleInputChange}
+                                required={field.required}
+                                placeholder={`Введите ${field.label.toLowerCase()}`}
                             />
                         )}
                         {field.type === 'number' && (

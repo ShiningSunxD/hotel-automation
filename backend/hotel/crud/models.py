@@ -108,3 +108,6 @@ class Booking_service(models.Model):
     booking = models.ForeignKey(Booking, on_delete=models.CASCADE, verbose_name='Бронирование')
     service = models.ForeignKey(Service, on_delete=models.CASCADE, verbose_name='Сервис')
     quantity = models.PositiveIntegerField(default=1, verbose_name='Количество')
+
+
+

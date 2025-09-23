@@ -44,7 +44,9 @@ INSTALLED_APPS = [
     'api',
     'crud',
     'corsheaders',
-    'hotel_admin'
+    'hotel_admin',
+    'articles',
+    'stats',
 ]
 
 MIDDLEWARE = [

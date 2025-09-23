@@ -1,0 +1,14 @@
+.FirstImage{
+    width: 20%;
+}
+
+.imagesContainer{
+    display: flex;
+    justify-content: center;
+    gap: 5%;
+    width: 50%;
+}
+
+.OtherImages{
+    width: 40%;
+}

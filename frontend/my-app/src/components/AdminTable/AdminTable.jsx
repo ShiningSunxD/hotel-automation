@@ -1,6 +1,8 @@
 import { useState, useEffect } from 'react';
 import { Button, Table, TableBody, TableCell, TableHead, TableRow } from '@mui/material';
 import { BrowserRouter as Router, Routes, Route, useSearchParams, Link, useNavigate } from 'react-router-dom';
+import styles from './AdminTable.module.css';
+
 
 function Row({ modelName, row, API_to_update, order, setDeleted }) {
   const navigate = useNavigate();
@@ -19,7 +21,7 @@ function Row({ modelName, row, API_to_update, order, setDeleted }) {
               if( typeof row[item] === 'boolean'){
                 return <TableCell align="center" key={index}> {row[item] ? 'да' : 'нет'} </TableCell>
               }
-              return <TableCell align="center" key={index}> {row[item] ? row[item] : '-'} </TableCell>
+              return <TableCell className={styles.tableCell} align="center" key={index}> {row[item] ? row[item] : '-'} </TableCell>
           })}
         <TableCell sx={{display: 'flex', flexDirection: 'column', gap: '10px', alignItems:'center'}} align="center">
             <Button onClick={() => {
@@ -77,6 +79,7 @@ function AdminTable({modelName, API, API_to_update}) {
                 dict[name] = label; 
               })
               setHeader(dict);
+              console.log(fetchResponse.data)
               setFields(fetchResponse.data);
               setLoading(false);
           } catch (err) {
@@ -91,7 +94,7 @@ function AdminTable({modelName, API, API_to_update}) {
 
 
   return (
-      <Table aria-label="collapsible table">
+      <Table aria-label="collapsible table" className={styles.tableContainer}>
         <TableHead>
           <TableRow>
 

@@ -3,7 +3,7 @@ import { Typography, Paper, Button } from '@mui/material';
 import { TopNavigation, Footer, DynamicForm, AdminTable } from '@components';
 import  useAdmin  from '../../hooks/useAdmin.jsx';
 import { useNavigate } from 'react-router-dom';
-import { adminMetadataAPI, roomsAPI, room_typesAPI, servicesAPI, bookingsAPI, booking_serviceAPI, userAPI } from '../../api';
+import { adminMetadataAPI, roomsAPI, room_typesAPI, servicesAPI, bookingsAPI, booking_serviceAPI, userAPI, articlesAPI, articleImagesAPI } from '../../api';
 import styles from './Admin.module.css';
 import { useSearchParams } from 'react-router-dom';
 
@@ -24,7 +24,9 @@ function Admin() {
       'Room_types': room_typesAPI,
       'Service': servicesAPI,
       'User': userAPI,
-      'Booking_service': booking_serviceAPI,  
+      'Booking_service': booking_serviceAPI,
+      'Article': articlesAPI,
+      'articleImages': articleImagesAPI,
    }
 
 
@@ -63,6 +65,7 @@ function Admin() {
             <Button variant="outlined" onClick={() => handleButtonClick('Booking')} >Бронирования</Button>
             <Button variant="outlined" onClick={() => handleButtonClick('Service')} >Сервисы</Button>
             <Button variant="outlined" onClick={() => handleButtonClick('Booking_service')} >Сервисы бронирования</Button>
+            <Button variant="outlined" onClick={() => handleButtonClick('Article')} >Статьи</Button>
          </div>
          
          {table && <DynamicForm modelName={table} API={adminMetadataAPI} API_to_update={FetchAPI} />}

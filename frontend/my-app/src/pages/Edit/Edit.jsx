@@ -1,21 +1,23 @@
 import { useEffect, useState } from "react";
 import { TopNavigation, Footer, DynamicForm } from '@components';
 import { useSearchParams, useNavigate } from "react-router-dom";
-import { adminMetadataAPI, roomsAPI, room_typesAPI, servicesAPI, bookingsAPI, booking_serviceAPI, userAPI } from '../../api';
+import { adminMetadataAPI, roomsAPI, room_typesAPI, servicesAPI, bookingsAPI, booking_serviceAPI, userAPI, articlesAPI, articleImagesAPI } from '../../api';
 
 function Edit() {
-   const [searchParams] = useSearchParams();
-   const [predefined, setPredefined] = useState({});
-
-   const navigate = useNavigate();
+    const [searchParams] = useSearchParams();
+    const [predefined, setPredefined] = useState({});
+    const [error, setError] = useState();
+    const navigate = useNavigate();
 
    const match_API = {
-         'Rooms': roomsAPI,
-         'Booking': bookingsAPI,
-         'Room_types': room_typesAPI,
-         'Service': servicesAPI,
-         'User': userAPI,
-         'Booking_service': booking_serviceAPI,  
+        'Rooms': roomsAPI,
+        'Booking': bookingsAPI,
+        'Room_types': room_typesAPI,
+        'Service': servicesAPI,
+        'User': userAPI,
+        'Booking_service': booking_serviceAPI,
+        'Article': articlesAPI,
+        'articleImages': articleImagesAPI,  
       }
 
    const table = searchParams.get('table') || null;
@@ -43,6 +45,7 @@ function Edit() {
            const fetchPredefined = async () => {
            try {
                const response = await fetchAPI.retrieve(id);
+               console.log(response.data)
                setPredefined(response.data);
 
            } catch (err) {

@@ -25,4 +25,5 @@ urlpatterns = [
     path('api/crud/', include('crud.urls')),
     path('api/hotel_admin/', include('hotel_admin.urls')),
     path('api/stats/', include('stats.urls')),
+    path('api/articles/', include('articles.urls')),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
