@@ -99,8 +99,7 @@ venv/
 ENV/
 env.bak/
 venv.bak/
-*.png
-!/**/*.png
+
 
 # Django secret key
 secret_key.txt

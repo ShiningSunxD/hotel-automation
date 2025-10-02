@@ -25,9 +25,9 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 SECRET_KEY = 'django-insecure-ernkw3ktjr+%$!)varikx%u@v^h&@^x2f3@s7m7$o&*ofnfh9$'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['perfectrent.ru', 'www.perfect-rent.ru', 'localhost', '46.254.16.47']
 
 
 # Application definition
@@ -147,8 +147,9 @@ REST_FRAMEWORK = {
     ],
 }
 
-CORS_ALLOW_ALL_ORIGINS = True
 
-# CORS_ALLOWED_ORIGINS = [
-#     "http://localhost:5173",
-# ]
+CORS_ALLOWED_ORIGINS = [
+    "http://localhost:3000",
+    "http://perfectrent.ru",
+    "https://perfectrent.ru",
+]
