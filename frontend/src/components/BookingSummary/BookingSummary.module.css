@@ -1,5 +1,8 @@
 .summaryContainer{
     display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
     justify-content: space-between;
 }
 
@@ -8,7 +11,13 @@
     flex-direction: column;
     align-items: end;
     justify-content: center;
-    gap: 5%;
+    gap: 20px;
+}
+
+.typographies{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
 }
 
 .buttonContainer{
@@ -17,4 +26,38 @@
     justify-content: center;
     flex-direction: column;
     gap: 10%;
+}
+
+.rightSide{
+    display: flex;
+    gap:20px;
+}
+
+.inputField{
+    width: 100px;
+}
+
+
+@media (max-width: 1400px) {
+    .rightSide{
+        flex-direction: column;
+    }
+    .typographies > *{
+        font-size: 12px !important;
+    }
+}
+
+@media (max-width:850px){
+    .servicesContainer{
+        align-items: center;
+    }
+
+
+    .serviceContainer{
+        width: 100%;
+        justify-content: center;
+        align-items: center;
+        display: flex;
+        flex-direction: column;
+    }
 }

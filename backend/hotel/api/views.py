@@ -26,7 +26,15 @@ class RegisterView(APIView):
         serializer = UserSerializer(data=request.data)
         if serializer.is_valid():
             user = serializer.save()
-            UserProfile.objects.create(user=user, last_auth_date=timezone.now())
+
+            profile, created = UserProfile.objects.get_or_create(
+            user=user,
+            defaults={'last_auth_date': timezone.now()}
+            )
+            if not created:
+                profile.last_auth_date = timezone.now()
+                profile.save()
+
             token, created = Token.objects.get_or_create(user=user)
             return Response({
                 'token': token.key,

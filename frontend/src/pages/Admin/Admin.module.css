@@ -1,9 +1,7 @@
 .buttonContainer{
     width: 50%;
+    gap: 8px;
+    flex-wrap: wrap;
     display: flex;
-    justify-content: space-around;
-}
-
-.adminTable{
-    width: 70%;
+    justify-content: center;
 }

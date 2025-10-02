@@ -8,3 +8,4 @@ export { default as Signup } from './Signup/Signup';
 export { default as Admin } from './Admin/Admin';
 export { default as Edit } from './Edit/Edit';
 export { default as ArticleDetail } from './ArticleDetail/ArticleDetail';
+export { default as News } from './News/News';

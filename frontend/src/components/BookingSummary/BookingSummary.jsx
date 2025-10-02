@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import styles from './BookingSummary.module.css';
 import dayjs from 'dayjs';
 import { bookingsAPI } from '../../api';
+import { Snackbar_component } from '@components';
 
 function BookingSummary({services, booking_id}) {
     const booking = useSelector(state => {
@@ -21,6 +22,7 @@ function BookingSummary({services, booking_id}) {
 
     const [loading, setLoading] = useState(false);
     const [submitError, setSubmitError] = useState('');
+    const [success, setSuccess] = useState(false);
 
     useEffect(() => {
         if(services){
@@ -83,8 +85,6 @@ function BookingSummary({services, booking_id}) {
             setLoading(true);
             setSubmitError('');
             try {
-
-
                 const services_data = servicesState.map(item => ({
                     service_id: item.id,
                     quantity: item.quantity
@@ -99,12 +99,13 @@ function BookingSummary({services, booking_id}) {
                 }
                 console.log('request -', request)
                 const response = await bookingsAPI.create(request);
+                if(response.status == 200 || response.status == 201) setSuccess(true);
                 console.log(response.data);  
                 setLoading(false);
 
             } catch (err) {
                 setLoading(false);
-                setSubmitError(err.response.data[0]);
+                setSubmitError(true);
             }
         };
 
@@ -112,64 +113,92 @@ function BookingSummary({services, booking_id}) {
 
     return (
         <div className={styles.summaryContainer}>
-            <div>
-                <Typography variant="h6">Номер: {booking.number} </Typography>
-                <Typography variant="h6">Этаж: {booking.floor} </Typography>
-                <Typography variant="h6">Цена: {booking.price}р за ночь</Typography>
-                <Typography variant="h6">Тип номера: {booking.type_name}</Typography> 
-                <Typography variant="h6">Дата въезда: {booking.check_in}</Typography> 
-                <Typography variant="h6">Дата выезда: {booking.check_out}</Typography> 
-            </div>
-
-            <div className={styles.servicesContainer}>
-                {servicesState && servicesState.map((item, index) => (
-                <div key={item.id}>
-                    <FormGroup sx={{display: 'inline-block'}}>
-                        <FormControlLabel control={<Checkbox checked={checkboxState[index]} onChange={() => handleCheckboxChange(index)} />} label={`${item.name} - ${item.price} ₽`}  />
-                    </FormGroup>
-                
-                    <TextField
-                        disabled={!checkboxState[index]}
-                        type="number"
-                        label="Количество"
-                        min="0"
-                        value={servicesState[index].quantity}
-                        onChange={(e) => {
-                                handleQuantityChange(index, e.target.value.replace(/[^\d]/g, ''));
-                            }
-                        }
-                        onKeyPress={(e) => {
-                            if (!/[0-9]/.test(e.key) && 
-                                !['Backspace', 'Delete', 'ArrowLeft', 'ArrowRight', 'Tab'].includes(e.key)) {
-                                e.preventDefault();
-                            }
-                            }}
-                    
-                        onPaste={(e) => {
-                            const pasteData = e.clipboardData.getData('text');
-                            const numericPaste = pasteData.replace(/[^\d]/g, '');
-                            if (numericPaste) {
-                            handleQuantityChange(index, numericPaste);
-                            }
-                            e.preventDefault();
-                            }}
-                    />
-                </div>
-                ))}
-            </div>
             
-            <div className={styles.buttonContainer}>
-                <Typography variant="h6">Итоговая цена - {price}</Typography>
-                <Button onClick={handleButton} sx={{backgroundColor: 'green'}} variant="contained" disabled={submitError}>
-                    {loading ? (
-                        <CircularProgress size={24} color="inherit" />)
-                         : ('Отправить')
-                    }
-                </Button>
-                {submitError && <Typography variant="body2" color="error">{submitError}</Typography>}
+                <div className={styles.typographies} >
+                    <Typography variant="h6">Номер: {booking.number} </Typography>
+                    <Typography variant="h6">Этаж: {booking.floor} </Typography>
+                    <Typography variant="h6">Цена: {booking.price}р за ночь</Typography>
+                    <Typography variant="h6">Тип номера: {booking.type_name}</Typography> 
+                    <Typography variant="h6">Дата въезда: {booking.check_in}</Typography> 
+                    <Typography variant="h6">Дата выезда: {booking.check_out}</Typography> 
+                </div>
+            <div className={styles.rightSide}>
+                <div className={styles.servicesContainer}>
+                    {servicesState && servicesState.map((item, index) => (
+                    <div className={styles.serviceContainer}  key={item.id}>
+                        <FormGroup sx={{display: 'inline-block'}}>
+                            <FormControlLabel control={<Checkbox 
+
+                            sx={{
+                                    '& .MuiSvgIcon-root': {
+                                        fontSize: { xs: 15, sm: 20, md: 24 }
+                                    }
+                                }}
+                            checked={checkboxState[index]} onChange={() => handleCheckboxChange(index)} />}
+                            
+                            sx={{
+                                    '& .MuiFormControlLabel-label': {
+                                        fontSize: { xs: '12px', sm: '14px', md: '16px' }
+                                    }
+                                }}
+                            
+                            label={`${item.name} - ${item.price} ₽`}  />
+                        </FormGroup>
+                    
+                        <TextField
+                            className={styles.inputField}
+                            disabled={!checkboxState[index]}
+                            type="number"
+                            label="Количество"
+                            min="0"
+                            value={servicesState[index].quantity}
+                            onChange={(e) => {
+                                    handleQuantityChange(index, e.target.value.replace(/[^\d]/g, ''));
+                                }
+                            }
+                            onKeyPress={(e) => {
+                                if (!/[0-9]/.test(e.key) && 
+                                    !['Backspace', 'Delete', 'ArrowLeft', 'ArrowRight', 'Tab'].includes(e.key)) {
+                                    e.preventDefault();
+                                }
+                                }}
+                        
+                            onPaste={(e) => {
+                                const pasteData = e.clipboardData.getData('text');
+                                const numericPaste = pasteData.replace(/[^\d]/g, '');
+                                if (numericPaste) {
+                                handleQuantityChange(index, numericPaste);
+                                }
+                                e.preventDefault();
+                                }}
+
+                        />
+                    </div>
+                    ))}
+                </div>
+                
+                <div className={styles.buttonContainer}>
+                    <Typography variant="h6">Итоговая цена - {price}</Typography>
+                    <Button onClick={handleButton} sx={{backgroundColor: 'green'}} variant="contained" disabled={submitError}>
+                        {loading ? (
+                            <CircularProgress size={24} color="inherit" />)
+                            : ('Отправить')
+                        }
+                    </Button>
+                    {submitError && <Typography variant="body2" color="error">{submitError}</Typography>}
+                </div>
             </div>
+                <Snackbar_component IsOpen={success} onClose={() => setSuccess(false)} severity='success'>
+                    Вы успешно забронировали номер! Перейдите в профиль, чтобы просмотреть свои бронирования.
+                </Snackbar_component>
+
+                <Snackbar_component IsOpen={submitError} onClose={() => setSubmitError(false)} severity='error'>
+                    Произошла ошибка!
+                </Snackbar_component>
 
         </div>
+
+        
     )
 };
 

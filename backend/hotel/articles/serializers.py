@@ -9,7 +9,7 @@ class ArticleImageSerializer(serializers.ModelSerializer):
     
     class Meta:
         model = ArticleImage
-        fields = ('id', 'image_url', 'uploaded_at')
+        fields = ('id', 'article', 'image_url', 'photo', 'uploaded_at')
 
 class ArticleListSerializer(serializers.ModelSerializer):
     class Meta:
@@ -26,4 +26,4 @@ class ArticleDetailSerializer(serializers.ModelSerializer):
 class ImageUploadSerializer(serializers.ModelSerializer):
     class Meta:
         model = ArticleImage
-        fields = ('article', 'photo', 'description')
+        fields = ('article', 'photo')

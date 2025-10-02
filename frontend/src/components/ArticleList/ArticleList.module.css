@@ -13,3 +13,17 @@
     text-overflow: ellipsis;
     cursor: pointer;
 }
+
+@media (max-width: 900px) {
+
+    .articleContainer{
+        font-size: 14px;
+    }
+}
+
+@media (max-width: 600px) {
+    .articleContainer{
+        font-size: 12px;
+    }
+
+}

@@ -1,5 +1,6 @@
 .FirstImage{
     width: 20%;
+    border-radius: 7%;
 }
 
 .imagesContainer{
@@ -11,4 +12,5 @@
 
 .OtherImages{
     width: 40%;
+    border-radius: 7%;
 }

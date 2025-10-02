@@ -26,6 +26,7 @@ function Row({ modelName, row, API_to_update, order, setDeleted }) {
         <TableCell sx={{display: 'flex', flexDirection: 'column', gap: '10px', alignItems:'center'}} align="center">
             <Button onClick={() => {
               const response = API_to_update.destroy(row.id);
+              console.log("response.data -", response)
               setDeleted(prevDeleted => [...prevDeleted, row.id]);
             }} 
             sx={{backgroundColor: 'red', color: 'white', width: '10vh'}} variant="outlined">

@@ -3,6 +3,7 @@
     display: flex;
     width: 75%;
     justify-content: space-between;
+    align-items: center;
 }
 
 .image{
@@ -12,6 +13,12 @@
     border-radius: 7%;
 }
 
+.text{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
 .bookCheckbox{
     display: flex;
     align-items: center;
@@ -19,14 +26,44 @@
 }
 
 .datePickers{
+    width: 30%;
     display: flex;
     flex-direction: column;
     justify-content: center;
-    gap: 5%;
+    gap: 10px;
 }
 
 .typographies{
     display: flex;
     flex-direction: column;
     justify-content: center;
+}
+
+@media (max-width: 1300px) {
+    .typographies > *{
+        font-size: 12px !important;
+    }
+
+}
+
+@media (max-width: 1080px) {
+    .RoomCard{
+        flex-direction: column;
+        gap: 20px;
+    }
+
+    .image{
+        width: 50%;
+    }
+
+}
+
+@media (max-width: 570px) {
+    .typographies > *{
+        font-size: 8px !important;
+    }
+    .text{
+        gap: 10px;
+        justify-content: center;
+    }
 }

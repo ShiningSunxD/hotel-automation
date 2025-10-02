@@ -34,6 +34,7 @@ export const bookingsAPI = createCRUD('crud/bookings/');
 export const booking_serviceAPI = createCRUD('crud/booking_service/');
 export const userAPI = createCRUD('auth/user/');
 export const articlesAPI = createCRUD('articles/articles/');
+articlesAPI.by_slug = (slug) => api.get(`${'articles/articles/slug/'}${slug}/`)
 export const articleImagesAPI = createCRUD('articles/article-images/');
 export const authAPI = {
     login: (credentials) => api.post('auth/login/', credentials),

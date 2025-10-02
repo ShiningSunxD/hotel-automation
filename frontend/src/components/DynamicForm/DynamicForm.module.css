@@ -1,4 +1,5 @@
 .fieldContainer{
+    width: 60%;
     justify-content: right;
     align-items: center;
     display: flex;
@@ -15,13 +16,14 @@
 }
 
 .fieldsContainer{
-    width: 40%;
+    width: 100%;
     display: flex;
+    align-items: center;
     flex-direction: column;
     gap: 20px;
 }
 
 .inputField{
-    width: 50%;
+    width: 300px;
 }
 

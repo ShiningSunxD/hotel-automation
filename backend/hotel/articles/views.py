@@ -18,19 +18,34 @@ class ArticleViewSet(viewsets.ModelViewSet):
             return [IsAdminUser()]
         return [AllowAny()]
     
+
     def list(self, request, *args, **kwargs):
         articles = Article.objects.all()
         serializer = ArticleListSerializer(articles, many=True)
         return Response(serializer.data)
 
 
+    def create(self, request, *args, **kwargs):
+        serializer = ArticleDetailSerializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+        self.perform_create(serializer)
+        headers = self.get_success_headers(serializer.data)
+        return Response(serializer.data, status=status.HTTP_201_CREATED, headers=headers)
+
+
+
+
     def retrieve(self, request, *args, **kwargs):
-        slug = kwargs.get('pk')
-        article = get_object_or_404(self.queryset, slug=slug)
+        id = kwargs.get('pk')
+        article = get_object_or_404(self.queryset, id=id)
         serializer = ArticleDetailSerializer(article)
-        
         return Response(serializer.data)
 
+    @action(detail=False, methods=['get'], url_path='slug/(?P<slug>[^/.]+)')
+    def by_slug(self, request, slug=None):
+        article = get_object_or_404(self.queryset, slug=slug)
+        serializer = ArticleDetailSerializer(article)
+        return Response(serializer.data)
 
     @action(detail=True, methods=['get'], url_path='images')
     def get_article_images(self, request, slug=None):
@@ -64,7 +79,6 @@ class ArticleImageViewSet(viewsets.ModelViewSet):
             image = serializer.save()
             return Response(
                 {
-                    'success': True,
                     'image_id': image.id,
                     'image_url': image.photo.url,
                     'message': 'Фото успешно загружено'

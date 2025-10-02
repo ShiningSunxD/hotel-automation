@@ -5,6 +5,7 @@ import { TopNavigation, Footer, BookingTable } from '@components';
 import  useAuth  from '../../hooks/useAuth.jsx';
 import styles from './Account.module.css'
 import { useNavigate } from 'react-router-dom';
+import { Snackbar_component } from '@components';
 
 function Account() {
    const navigate = useNavigate();
@@ -14,7 +15,8 @@ function Account() {
    const { isAuthenticated, isLoading } = useAuth();
    const [shouldRender, setShouldRender] = useState(false);
 
-
+   const [success, setSuccess] = useState(false);
+   const [error, setError] = useState(false);
 
    useEffect(() => {
       document.title = "Account";
@@ -60,7 +62,15 @@ function Account() {
       <Typography variant="h3">Добро пожаловать!</Typography>
       
       <Paper className={styles.bookingTable} variant="elevation" elevation={3}>
-         <BookingTable className={styles.bookingTable} data={bookingData} header={header} API={bookingsAPI} />
+         <BookingTable onError={() => setError(true)} onSuccess={() => setSuccess(true)} className={styles.bookingTable} data={bookingData} header={header} API={bookingsAPI} />
+
+         <Snackbar_component IsOpen={success} onClose={() => setSuccess(false)} severity='success'>
+            Вы успешно отменили бронирование!
+         </Snackbar_component>
+
+         <Snackbar_component IsOpen={error} onClose={() => setError(false)} severity='success'>
+            Вы успешно отменили бронирование!
+         </Snackbar_component>
       </Paper>
         
       

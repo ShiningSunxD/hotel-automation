@@ -1,5 +1,5 @@
 .tableContainer{
-    table-layout: fixed;
+    min-width: 800px !important;
 }
 
 .tableCell{

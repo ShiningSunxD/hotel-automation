@@ -26,7 +26,7 @@ function Admin() {
       'User': userAPI,
       'Booking_service': booking_serviceAPI,
       'Article': articlesAPI,
-      'articleImages': articleImagesAPI,
+      'ArticleImage': articleImagesAPI,
    }
 
 
@@ -66,10 +66,16 @@ function Admin() {
             <Button variant="outlined" onClick={() => handleButtonClick('Service')} >Сервисы</Button>
             <Button variant="outlined" onClick={() => handleButtonClick('Booking_service')} >Сервисы бронирования</Button>
             <Button variant="outlined" onClick={() => handleButtonClick('Article')} >Статьи</Button>
+            <Button variant="outlined" onClick={() => handleButtonClick('ArticleImage')} >Фотографии статей</Button>
          </div>
          
          {table && <DynamicForm modelName={table} API={adminMetadataAPI} API_to_update={FetchAPI} />}
-         <Paper className={styles.adminTable} variant="elevation" elevation={3}>
+         <Paper 
+         sx={{  
+        height: 'auto',
+        display: 'block'
+    }}
+         className={styles.adminTable} variant="elevation" elevation={3}>
             {table && <AdminTable modelName={table} API={adminMetadataAPI} API_to_update={FetchAPI} />}
          </Paper>
       <Footer />

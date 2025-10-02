@@ -28,20 +28,20 @@ function TopNavigation() {
      <>
         <BottomNavigation className={styles.navigation}
         showLabels>
-            <BottomNavigationAction onClick={() => navigate('/')} className={styles.nav_button} label="Главная" icon={<HomeIcon sx={{ fontSize: 40 }}/>} />
-            <BottomNavigationAction onClick={() => navigate('/rooms')}className={styles.nav_button} label="Номера" icon={<LocalHotelIcon sx={{ fontSize: 40 }}/>} />
-            <BottomNavigationAction onClick={() => navigate('/booking')} className={styles.nav_button} label="Бронирование" icon={<LuggageIcon sx={{ fontSize: 40 }}/>} />
-            <BottomNavigationAction className={styles.nav_button} label="Новости" icon={<NewspaperIcon sx={{ fontSize: 40 }}/>} />
+            <BottomNavigationAction onClick={() => navigate('/')} className={styles.nav_button} label="Главная" icon={<HomeIcon sx={{ fontSize: { xs: 14, sm: 32, md: 40 } }}/>} />
+            <BottomNavigationAction onClick={() => navigate('/rooms')}className={styles.nav_button} label="Номера" icon={<LocalHotelIcon sx={{ fontSize: { xs: 14, sm: 32, md: 40 } }}/>} />
+            <BottomNavigationAction onClick={() => navigate('/booking')} className={styles.nav_button} label="Бронирование" icon={<LuggageIcon sx={{ fontSize: { xs: 14, sm: 32, md: 40 } }}/>} />
+            <BottomNavigationAction onClick={() => navigate('/news')} className={styles.nav_button} label="Новости" icon={<NewspaperIcon sx={{ fontSize: { xs: 14, sm: 32, md: 40 } }}/>} />
             
             {logged ? 
             (<BottomNavigation className={styles.navigation_login}
             showLabels>
-               <BottomNavigationAction onClick={() => navigate('/account')} className={styles.nav_button} label="Профиль" icon={<AccountCircleIcon sx={{ fontSize: 40 }}/>} />
-               <BottomNavigationAction onClick={() => navigate('/logout')} className={styles.nav_button} label="Выйти" icon={<ExitToAppIcon sx={{ fontSize: 40 }}/>} />
+               <BottomNavigationAction onClick={() => navigate('/account')} className={styles.nav_button} label="Профиль" icon={<AccountCircleIcon sx={{ fontSize: { xs: 14, sm: 32, md: 40 } }}/>} />
+               <BottomNavigationAction onClick={() => navigate('/logout')} className={styles.nav_button} label="Выйти" icon={<ExitToAppIcon sx={{ fontSize: { xs: 14, sm: 32, md: 40 } }}/>} />
             </BottomNavigation>
             ) 
             :
-            (<BottomNavigationAction onClick={() => navigate('/login')} className={styles.nav_button} label="Войти" icon={<ExitToAppIcon sx={{ fontSize: 40 }}/>} />)
+            (<BottomNavigationAction onClick={() => navigate('/login')} className={styles.nav_button} label="Войти" icon={<ExitToAppIcon sx={{ fontSize: { xs: 14, sm: 32, md: 40 } }}/>} />)
             }
             
         </BottomNavigation>

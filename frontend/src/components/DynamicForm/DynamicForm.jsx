@@ -4,16 +4,17 @@ import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 import dayjs from 'dayjs';
+import { Snackbar_component } from '@components';
 import styles from './DynamicForm.module.css'
 
 function DynamicForm({ modelName, API, API_to_update, predefined={}, callBack=null }) {
     const [fields, setFields] = useState([]);
     const [formData, setFormData] = useState({});
     const [loading, setLoading] = useState(false);
-    const [error, setError] = useState(null);
     const [fileData, setFileData] = useState({});
-
-
+    
+    const [error, setError] = useState(false);
+    const [success, setSuccess] = useState(false);
 
     useEffect(() => {
         setLoading(false);
@@ -24,6 +25,7 @@ function DynamicForm({ modelName, API, API_to_update, predefined={}, callBack=nu
                 model: modelName
                 }
             const response = await API.get({params});
+            console.log('metadata response - ', response.data)
             setFields(response.data);
             setLoading(false);
         } catch (err) {
@@ -146,19 +148,24 @@ function DynamicForm({ modelName, API, API_to_update, predefined={}, callBack=nu
 
                 delete jsonDataToSend['photo'];
 
-                console.log('Отправка JSON:', jsonDataToSend);
 
                 let response;
                 if(Object.keys(predefined).length !== 0){
                     response = await API_to_update.update(predefined.id, jsonDataToSend);
                 }
                 else{
+                    console.log('Отправка JSON:', jsonDataToSend);
                     response = await API_to_update.create(jsonDataToSend);
                 }
-                console.log(response.data);
+                
+                if(response.status == 200 || response.status == 201) {
+                    setSuccess(true); 
+                    console.log('response.data -', response.data);
+                }
+                
+                else setError(true);
             }
             
-            alert('Данные успешно сохранены!');
             setFormData({}); 
             setFileData({});
             const fileInput = document.getElementById('fileInput');
@@ -167,8 +174,7 @@ function DynamicForm({ modelName, API, API_to_update, predefined={}, callBack=nu
             }
             callBack && callBack();
         } catch (err) {
-            console.error('Ошибка при сохранении:', err);
-            alert('Произошла ошибка при сохранении данных');
+            setError(true);
         }
     };
 
@@ -328,8 +334,16 @@ function DynamicForm({ modelName, API, API_to_update, predefined={}, callBack=nu
             <Button onClick={handleSubmit} sx={{backgroundColor: 'green'}} variant="contained">
                 Сохранить!
             </Button>
+            
+            <Snackbar_component IsOpen={success} onClose={() => setSuccess(false)} severity='success'>
+                Данные успешно сохранены!
+            </Snackbar_component>
 
+            <Snackbar_component IsOpen={error} onClose={() => setError(false)} severity='error'>
+                Произошла ошибка!
+            </Snackbar_component>
         </form>
+
     );
 };
 

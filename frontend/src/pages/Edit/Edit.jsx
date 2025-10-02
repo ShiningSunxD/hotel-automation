@@ -17,7 +17,7 @@ function Edit() {
         'User': userAPI,
         'Booking_service': booking_serviceAPI,
         'Article': articlesAPI,
-        'articleImages': articleImagesAPI,  
+        'ArticleImage': articleImagesAPI,  
       }
 
    const table = searchParams.get('table') || null;

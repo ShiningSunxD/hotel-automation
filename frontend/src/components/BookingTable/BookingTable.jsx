@@ -12,10 +12,10 @@ import Paper from '@mui/material/Paper';
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
 import { Button } from '@mui/material';
+import { Snackbar_component } from '@components';
 
-function Row({ row, API, setDeleted }) {
+function Row({ onError, onSuccess, row, API, setDeleted }) {
   const [open, setOpen] = useState(false);
-
   return (
     <>
       <TableRow sx={{ '& > *': { borderBottom: 'unset' } }}>
@@ -37,8 +37,14 @@ function Row({ row, API, setDeleted }) {
         <TableCell align="right">{row.status_display}</TableCell>
         <TableCell align="right">
             <Button onClick={() => {
-              const response = API.destroy(row.id);
-              setDeleted(prevDeleted => [...prevDeleted, row.id]);
+              try{
+                const response = API.destroy(row.id);
+                  setDeleted(prevDeleted => [...prevDeleted, row.id]);
+                  onSuccess();
+              }
+              catch(err){
+                onError()
+              }
             }} 
             sx={{backgroundColor: 'red', color: 'white'}} variant="outlined">
             Отменить
@@ -74,12 +80,13 @@ function Row({ row, API, setDeleted }) {
           </Collapse>
         </TableCell>
       </TableRow>
+
     </>
   );
 }
 
 
-function BookingTable({header, data, API}) {
+function BookingTable({onSuccess, onError, header, data, API}) {
   const [deleted, setDeleted] = useState([]);
 
   return (
@@ -100,10 +107,11 @@ function BookingTable({header, data, API}) {
               return
             }
             else{
-              return <Row key={item.id} row={item} API={API} setDeleted={setDeleted}/>
+              return <Row onError={onError} onSuccess={onSuccess} key={item.id} row={item} API={API} setDeleted={setDeleted}/>
             }
           })}
         </TableBody>
+
       </Table>
   );
 }

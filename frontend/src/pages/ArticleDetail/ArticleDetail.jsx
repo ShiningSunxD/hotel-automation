@@ -18,7 +18,7 @@ function ArticleDetail() {
         setLoading(true);
         const fetchArticle = async () => {
         try {
-            const response = await articlesAPI.retrieve(slug);
+            const response = await articlesAPI.by_slug(slug);
             console.log(response.data);
             setArticle(response.data);
             setImages(response.data.images);
