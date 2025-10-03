@@ -46,7 +46,7 @@ function ArticleDetail() {
                 alt={`Ошибка загрузки фото`}
             />
         }
-        <Typography variant="body1" align='justify' gutterBottom>
+        <Typography className={styles.text} variant="body1" align='justify' gutterBottom>
             {article.content}
         </Typography>
 

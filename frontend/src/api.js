@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-export const URL = 'http://127.0.0.1:8000';
+export const URL = 'https://perfectrent.ru';
 
 
 const api = axios.create({
