@@ -80,20 +80,23 @@ function RoomCard({ room_id, room_number, room_floor, room_price, room_type_name
     return (
         <>
             <Paper className={styles.RoomCard} variant="elevation" elevation={3}>
-                    <img
-                    src={room_photo}
-                    alt={`Фото номера ${room_number}`}
-                    className={styles.image}
-                    />
-                    <div className={styles.text}>
+                    <div className={styles.imageContainer}>
+                        <img
+                            src={room_photo}
+                            alt={`Фото номера ${room_number}`}
+                            className={styles.image}
+                        />
 
-
-                        <div className={styles.typographies}>
+                    <div className={styles.typographies}>
                             <Typography variant="h6">Номер: {room_number} </Typography>
                             <Typography variant="h6">Этаж: {room_floor} </Typography>
                             <Typography variant="h6">Цена: {room_price}р за ночь</Typography>
                             <Typography variant="h6">Тип номера: {room_type_name}</Typography> 
                         </div>
+                    </div>
+
+                    <div className={styles.text}>
+
                         
                         <div className={styles.datePickers}>
                             <LocalizationProvider dateAdapter={AdapterDayjs}>

@@ -7,10 +7,15 @@
 }
 
 .image{
-    width: 30%;
+    width: 20vw;
     height: auto;
     object-fit: contain;
     border-radius: 7%;
+}
+
+.imageContainer{
+    display: flex;
+    gap: 5vw;
 }
 
 .text{
@@ -21,12 +26,12 @@
 
 .bookCheckbox{
     display: flex;
-    align-items: center;
+    align-items: right;
     justify-content: center;
 }
 
 .datePickers{
-    width: 30%;
+    width: 40%;
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -65,5 +70,16 @@
     .text{
         gap: 10px;
         justify-content: center;
+    }
+}
+
+@media (max-width: 420px) {
+    .text{
+        gap: 10px;
+        flex-direction: column;
+        align-items: center;
+    }
+    .datePickers{
+        width: 50%;
     }
 }

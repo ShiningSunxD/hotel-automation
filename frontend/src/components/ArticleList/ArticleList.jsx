@@ -36,7 +36,8 @@ function ArticleList({fromNews=false}) {
         {fromNews && articles.toReversed().map((item) => {
             return (
             <Paper className={styles.articleContainer} onClick={() => navigate(`/articles/${item.slug}`)} key={item.id} variant="elevation" elevation={3}> 
-                {item.title} 
+                <p className={styles.title} >{item.title} </p>
+                <p className={styles.date}>{item.created_at.slice(0,10)}</p>
             </Paper>
             )
         })}
@@ -45,7 +46,8 @@ function ArticleList({fromNews=false}) {
 
             return (
             <Paper className={styles.articleContainer} onClick={() => navigate(`/articles/${item.slug}`)} key={item.id} variant="elevation" elevation={3}> 
-                {item.title} 
+                <p className={styles.title}>{item.title} </p>
+                <p className={styles.date}>{item.created_at.slice(0,10)}</p>
             </Paper>
             )
         })}

@@ -1,20 +1,38 @@
 .FirstImage{
-    width: 20%;
+    height: 20vw;
+    width: auto;
     border-radius: 7%;
 }
 
 .imagesContainer{
+    height: 100%;
     display: flex;
     justify-content: center;
     gap: 5%;
-    width: 50%;
+    width: 70%;
 }
 
 .OtherImages{
-    width: 40%;
+    height: 20vw;
+    width: auto;
     border-radius: 7%;
 }
 
 .text{
     width: 60%;
+    text-align: center;
+}
+.header{
+    text-align: center;
+}
+
+
+@media (max-width: 1000px) {
+
+}
+
+@media (max-width: 600px) {
+    .FirstImage, .OtherImages{
+        height: 13vh;
+    }
 }

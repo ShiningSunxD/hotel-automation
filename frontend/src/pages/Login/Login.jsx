@@ -51,7 +51,7 @@ function Login() {
   return (
      <>
         <Paper className={styles.paper} variant="elevation" elevation={3}>
-            <Typography className={styles.typography} variant="h3">Авторизация</Typography>
+            <Typography className={styles.typography} variant="h4">Авторизация</Typography>
             <TextField onChange={(e) => handleInputChange(e, 'username')} ref={un => formValues.current.username = un} className={styles.logpass} label="Логин" id="login" />
             <TextField type='password' onChange={(e) => handleInputChange(e, 'password')} ref={pw => formValues.current.password = pw} className={styles.logpass} label="Пароль" id="password" />
             {error && <Typography variant="body2" color="error">Неверный логин или пароль!</Typography>}

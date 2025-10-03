@@ -34,7 +34,7 @@ function Booking() {
      <>
          <TopNavigation />
 
-         <Typography className={styles.typography} variant="h3">Страница бронирования</Typography>
+         <Typography className={styles.typography} variant="h4">Страница бронирования</Typography>
 
          <Paper className={styles.paper} variant="elevation" elevation={3}>
 

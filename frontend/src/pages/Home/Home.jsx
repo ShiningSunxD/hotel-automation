@@ -51,7 +51,7 @@ function Home() {
 
 
 
-         <ArticleList />
+         <ArticleList className={styles.ArticleList}/>
          
          <Footer />
      
@@ -59,4 +59,4 @@ function Home() {
   )
 }
 
-export default Home
+export default Home;

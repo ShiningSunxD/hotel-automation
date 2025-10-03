@@ -38,7 +38,7 @@ function ArticleDetail() {
     <>
         <TopNavigation />
 
-        <Typography variant="h2"> {article.title} </Typography>
+        <Typography className={styles.header} variant="h4"> {article.title} </Typography>
         
         {images && images.length > 0 && 
             <img className={styles.FirstImage}
@@ -46,7 +46,7 @@ function ArticleDetail() {
                 alt={`Ошибка загрузки фото`}
             />
         }
-        <Typography className={styles.text} variant="body1" align='justify' gutterBottom>
+        <Typography className={styles.text} variant="body1" gutterBottom>
             {article.content}
         </Typography>
 

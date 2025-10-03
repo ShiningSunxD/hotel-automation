@@ -17,3 +17,12 @@
 .logpass{
     width:70%;
 }
+
+
+
+@media(max-width: 400px){
+    .paper{
+        width: 70%;
+        height: 60%;
+    }
+}

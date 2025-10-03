@@ -56,7 +56,7 @@ function Rooms() {
 
          <TopNavigation/>
 
-         <Typography className={styles.typography} variant="h3">Наши номера</Typography>
+         <Typography className={styles.typography} variant="h4">Наши номера</Typography>
 
          <div className={styles.filterBar}>
             <FormControl className={styles.typeSelect}>
