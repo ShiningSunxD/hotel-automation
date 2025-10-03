@@ -112,6 +112,7 @@ function BookingSummary({services, booking_id}) {
 
 
     return (
+        <>
         <div className={styles.summaryContainer}>
             
                 <div className={styles.typographies} >
@@ -188,16 +189,16 @@ function BookingSummary({services, booking_id}) {
                     {submitError && <Typography variant="body2" color="error">{submitError}</Typography>}
                 </div>
             </div>
-                <Snackbar_component IsOpen={success} onClose={() => setSuccess(false)} severity='success'>
-                    Вы успешно забронировали номер! Перейдите в профиль, чтобы просмотреть свои бронирования.
-                </Snackbar_component>
-
-                <Snackbar_component IsOpen={submitError} onClose={() => setSubmitError(false)} severity='error'>
-                    Произошла ошибка!
-                </Snackbar_component>
 
         </div>
+    <Snackbar_component IsOpen={success} onClose={() => setSuccess(false)} severity='success'>
+        Вы успешно забронировали номер! Перейдите в профиль, чтобы просмотреть свои бронирования.
+    </Snackbar_component>
 
+    <Snackbar_component IsOpen={submitError} onClose={() => setSubmitError(false)} severity='error'>
+        Произошла ошибка!
+    </Snackbar_component>
+    </>
         
     )
 };

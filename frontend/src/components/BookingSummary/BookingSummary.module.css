@@ -1,6 +1,6 @@
 .summaryContainer{
     display: flex;
-    flex-direction: column;
+    flex-direction: row;
     align-items: center;
     gap: 20px;
     justify-content: space-between;
@@ -36,6 +36,13 @@
 .inputField{
     width: 100px;
 }
+
+@media(max-width: 1620px){
+    .summaryContainer{
+        flex-direction: column;
+    }
+}
+
 
 
 @media (max-width: 1400px) {
